@@ -12,6 +12,16 @@ model Person {
   nickname  String   @unique @db.VarChar(32)
   name      String   @db.VarChar(100)
   birthdate DateTime
+  techs     Tech[]
 
   @@map("persons")
+}
+
+model Tech {
+  id       String @id @default(uuid())
+  personId String @map(name: "person_id")
+  Person   Person @relation(fields: [personId], references: [id], onDelete: Cascade)
+  name     String @db.VarChar(32)
+
+  @@map("techs")
 }
