@@ -13,7 +13,7 @@ describe('Create Person', () => {
     sut = new CreatePersonUseCase(inMemoryPersonsRepository)
   })
 
-  it('should be able to create a person', async () => {
+  it('should be able to create a person without techs', async () => {
     const { person } = await sut.execute({
       nickname: 'johndoe',
       name: 'John Doe',
@@ -28,6 +28,26 @@ describe('Create Person', () => {
     expect(person.name).toEqual('John Doe')
     expect(person.birthdate).toEqual(new Date('1970-01-01'))
     expect(person.techs).toEqual([])
+  })
+
+  it('should be able to create a person with techs', async () => {
+    const { person } = await sut.execute({
+      nickname: 'johndoe',
+      name: 'John Doe',
+      birthdate: '1970-01-01',
+      techs: ['NodeJS', 'Postgres'],
+    })
+
+    expect(inMemoryPersonsRepository.items[0].id.toString()).toEqual(
+      person.id.toString(),
+    )
+    expect(person.nickname).toEqual('johndoe')
+    expect(person.name).toEqual('John Doe')
+    expect(person.birthdate).toEqual(new Date('1970-01-01'))
+    expect(person.techs).toEqual([
+      expect.stringContaining('NodeJS'),
+      expect.stringContaining('Postgres'),
+    ])
   })
 
   it('should not be able to create a person that already exists', async () => {
