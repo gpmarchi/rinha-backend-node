@@ -27,7 +27,7 @@ describe('Create Person', () => {
     expect(person.nickname).toEqual('johndoe')
     expect(person.name).toEqual('John Doe')
     expect(person.birthdate).toEqual(new Date('1970-01-01'))
-    expect(person.techs).toBeFalsy()
+    expect(person.techs).toEqual([])
   })
 
   it('should not be able to create a person that already exists', async () => {
@@ -35,7 +35,7 @@ describe('Create Person', () => {
       nickname: 'johndoe',
       name: 'John Doe',
       birthdate: new Date('1970-01-01'),
-      techs: null,
+      techs: [],
     })
 
     await inMemoryPersonsRepository.create(person)

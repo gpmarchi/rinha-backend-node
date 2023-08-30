@@ -32,7 +32,7 @@ export class CreatePersonUseCase {
       nickname,
       name,
       birthdate: new Date(birthdate),
-      techs,
+      techs: techs ?? [],
     })
 
     await this.personsRepository.create(person)
