@@ -5,7 +5,7 @@ import { PersonsRepository } from '../repositories/persons-repository'
 interface CreatePersonUseCaseRequest {
   nickname: string
   name: string
-  birthdate: string
+  birthdate: Date
   techs: string[] | null
 }
 
@@ -31,7 +31,7 @@ export class CreatePersonUseCase {
     const person = Person.create({
       nickname,
       name,
-      birthdate: new Date(birthdate),
+      birthdate,
       techs: techs ?? [],
     })
 

@@ -17,7 +17,7 @@ describe('Create Person', () => {
     const { person } = await sut.execute({
       nickname: 'johndoe',
       name: 'John Doe',
-      birthdate: '1970-01-01',
+      birthdate: new Date('1970-01-01'),
       techs: null,
     })
 
@@ -34,7 +34,7 @@ describe('Create Person', () => {
     const { person } = await sut.execute({
       nickname: 'johndoe',
       name: 'John Doe',
-      birthdate: '1970-01-01',
+      birthdate: new Date('1970-01-01'),
       techs: ['NodeJS', 'Postgres'],
     })
 
@@ -64,7 +64,7 @@ describe('Create Person', () => {
       sut.execute({
         nickname: 'johndoe',
         name: 'John Doe',
-        birthdate: '1970-01-01',
+        birthdate: new Date('1970-01-01'),
         techs: null,
       }),
     ).rejects.toBeInstanceOf(PersonAlreadyExistsError)
