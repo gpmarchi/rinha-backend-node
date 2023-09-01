@@ -11,7 +11,7 @@ model Person {
   id        String   @id @default(uuid())
   nickname  String   @unique @db.VarChar(32)
   name      String   @db.VarChar(100)
-  birthdate DateTime
+  birthdate DateTime @db.Date
   techs     Tech[]
 
   @@map("persons")
