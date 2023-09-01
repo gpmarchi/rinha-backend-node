@@ -29,4 +29,17 @@ export class InMemoryPersonsRepository implements PersonsRepository {
 
     return person
   }
+
+  async findBySearchTerm(searchTerm: string): Promise<Person[]> {
+    const persons = this.items.filter(
+      (person) =>
+        person.nickname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        person.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        person.techs.some((tech) =>
+          tech.toLowerCase().includes(searchTerm.toLowerCase()),
+        ),
+    )
+
+    return persons
+  }
 }

@@ -53,4 +53,40 @@ export class PrismaPersonsRepository implements PersonsRepository {
 
     return PrismaPersonMapper.toDomainWithTechs(person)
   }
+
+  async findBySearchTerm(searchTerm: string): Promise<Person[]> {
+    const persons = await prisma.person.findMany({
+      where: {
+        OR: [
+          {
+            name: {
+              contains: searchTerm,
+              mode: 'insensitive',
+            },
+          },
+          {
+            nickname: {
+              contains: searchTerm,
+              mode: 'insensitive',
+            },
+          },
+          {
+            techs: {
+              some: {
+                name: {
+                  contains: searchTerm,
+                  mode: 'insensitive',
+                },
+              },
+            },
+          },
+        ],
+      },
+      include: {
+        techs: true,
+      },
+    })
+
+    return persons.map(PrismaPersonMapper.toDomainWithTechs)
+  }
 }
