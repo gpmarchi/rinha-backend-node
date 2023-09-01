@@ -1,7 +1,7 @@
 import { AppError } from '@/domain/errors/app-error'
 import { env } from '@/env'
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { ZodError } from 'zod'
+import { ZodError, z } from 'zod'
 
 export function errorHandler(
   error: Error,
@@ -9,9 +9,20 @@ export function errorHandler(
   reply: FastifyReply,
 ) {
   if (error instanceof ZodError) {
+    const zodError = error.issues[0]
+
+    let statusCode = 400
+
+    if (
+      zodError.code === z.ZodIssueCode.invalid_type &&
+      (zodError.received === 'null' || zodError.received === 'undefined')
+    ) {
+      statusCode = 422
+    }
+
     return reply
-      .status(400)
-      .send({ message: 'Validation error.', issues: error.format() })
+      .status(statusCode)
+      .send({ message: 'Validation error.', issue: zodError })
   }
 
   if (error instanceof AppError) {
