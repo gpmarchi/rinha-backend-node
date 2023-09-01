@@ -21,12 +21,15 @@ export async function createPerson(
   const personsRepository = new PrismaPersonsRepository()
   const createPerson = new CreatePersonUseCase(personsRepository)
 
-  await createPerson.execute({
+  const { person } = await createPerson.execute({
     nickname: apelido,
     name: nome,
     birthdate: nascimento,
     techs: stack,
   })
 
-  return reply.status(201).send()
+  return reply
+    .status(201)
+    .header('Location', `${request.routerPath}/${person.id.toString()}`)
+    .send()
 }
