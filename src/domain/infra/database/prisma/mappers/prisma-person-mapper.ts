@@ -10,7 +10,7 @@ export class PrismaPersonMapper {
   static toPrisma(person: Person): RawPerson {
     return {
       id: person.id.toString(),
-      nickname: person.nickname,
+      nickname: person.nickname.toLowerCase(),
       name: person.name,
       birthdate: person.birthdate,
     }
