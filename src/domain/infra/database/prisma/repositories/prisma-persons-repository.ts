@@ -26,7 +26,7 @@ export class PrismaPersonsRepository implements PersonsRepository {
   async findByNickname(nickname: string): Promise<Person | null> {
     const person = await prisma.person.findUnique({
       where: {
-        nickname,
+        nickname: nickname.toLowerCase(),
       },
     })
 
