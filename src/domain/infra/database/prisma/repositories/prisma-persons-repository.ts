@@ -89,4 +89,8 @@ export class PrismaPersonsRepository implements PersonsRepository {
 
     return persons.map(PrismaPersonMapper.toDomainWithTechs)
   }
+
+  async countAll(): Promise<number> {
+    return prisma.person.count()
+  }
 }

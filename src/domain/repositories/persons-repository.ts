@@ -5,4 +5,5 @@ export interface PersonsRepository {
   findByNickname(nickname: string): Promise<Person | null>
   findById(id: string): Promise<Person | null>
   findBySearchTerm(searchTerm: string): Promise<Person[]>
+  countAll(): Promise<number>
 }
