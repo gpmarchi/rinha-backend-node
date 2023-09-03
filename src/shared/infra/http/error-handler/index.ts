@@ -5,7 +5,7 @@ import { ZodError, z } from 'zod'
 
 export function errorHandler(
   error: Error,
-  _: FastifyRequest,
+  request: FastifyRequest,
   reply: FastifyReply,
 ) {
   if (error instanceof ZodError) {
@@ -15,7 +15,8 @@ export function errorHandler(
 
     if (
       zodError.code === z.ZodIssueCode.invalid_type &&
-      (zodError.received === 'null' || zodError.received === 'undefined')
+      (zodError.received === 'null' || zodError.received === 'undefined') &&
+      request.body
     ) {
       statusCode = 422
     }
