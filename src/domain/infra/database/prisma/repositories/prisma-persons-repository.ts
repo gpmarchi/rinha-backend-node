@@ -1,7 +1,7 @@
 import { Person } from '@/domain/entities/person'
 import { PersonsRepository } from '@/domain/repositories/persons-repository'
+import { prisma } from '@/shared/infra/database/prisma/prisma'
 import { PrismaPersonMapper } from '../mappers/prisma-person-mapper'
-import { prisma } from '../prisma'
 
 export class PrismaPersonsRepository implements PersonsRepository {
   async create(person: Person): Promise<void> {
