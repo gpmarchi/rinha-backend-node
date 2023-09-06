@@ -1,0 +1,13 @@
+version: '3.5'
+
+services:
+  rinha-pg:
+    image: bitnami/postgresql
+    ports:
+      - ${POSTGRESQL_PORT}:${POSTGRESQL_PORT}
+    env_file:
+      - .env
+    environment:
+      - POSTGRESQL_USERNAME=${POSTGRESQL_USERNAME}
+      - POSTGRESQL_PASSWORD=${POSTGRESQL_PASSWORD}
+      - POSTGRES_DATABASE=${POSTGRESQL_DATABASE}
