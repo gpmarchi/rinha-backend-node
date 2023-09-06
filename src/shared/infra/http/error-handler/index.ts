@@ -33,6 +33,7 @@ export function errorHandler(
   if (env.NODE_ENV !== 'production') {
     console.error(error)
   } else {
+    console.error(error)
     // TODO: Here we should log to an external tool like DataDog/NewRelic/Sentry
   }
 
