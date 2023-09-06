@@ -1,0 +1,12 @@
+build
+node_modules
+.dockerignore
+.eslintignore
+.eslintrc.json
+.gitignore
+.npmrc
+docker-compose-db.yml
+docker-compose.yml
+Dockerfile
+vite.config.ts
+.git
