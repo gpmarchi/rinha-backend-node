@@ -12,6 +12,7 @@
     "remove:db": "docker compose -f docker-compose-db.yml down",
     "prisma:generate": "npx prisma generate",
     "prisma:migrate-dev": "npx prisma migrate dev",
+    "prisma:migrate-deploy": "npx prisma migrate deploy",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix",
     "test": "vitest run",
