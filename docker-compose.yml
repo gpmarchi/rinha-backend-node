@@ -18,6 +18,11 @@ services:
       - POSTGRESQL_HOST=${POSTGRESQL_HOST}
     networks:
       - rinha-backend-network
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "1.5GB"
 
   node1:
     image: gpmarchi/rinha-backend-node:latest
@@ -38,6 +43,11 @@ services:
       - rinha-backend-network
     depends_on:
       - rinha-pg
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: "0.6GB"
 
 networks:
   rinha-backend-network:
