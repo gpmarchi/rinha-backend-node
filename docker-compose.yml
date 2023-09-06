@@ -20,9 +20,6 @@ services:
       - rinha-backend-network
 
   node1:
-    build:
-      context: .
-      dockerfile: Dockerfile
     image: gpmarchi/rinha-backend-node:latest
     container_name: rinha-node1
     hostname: rinha-node1
@@ -32,11 +29,6 @@ services:
     environment:
       - NODE_ENV=${NODE_ENV}
       - PORT=${PORT}
-      - POSTGRESQL_USERNAME=${POSTGRESQL_USERNAME}
-      - POSTGRESQL_PASSWORD=${POSTGRESQL_PASSWORD}
-      - POSTGRESQL_DATABASE=${POSTGRESQL_DATABASE}
-      - POSTGRESQL_HOST=${POSTGRESQL_HOST}
-      - POSTGRESQL_PORT=${POSTGRESQL_PORT}
       - DATABASE_URL=${DATABASE_URL}
     ports:
       - 3333:3333
