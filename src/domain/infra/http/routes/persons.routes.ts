@@ -8,5 +8,5 @@ export async function personsRoutes(app: FastifyInstance) {
   app.post('/pessoas', createPerson)
   app.get('/pessoas/:id', getPerson)
   app.get('/pessoas', fetchPersons)
-  app.get('/pessoas/count', countPersons)
+  app.get('/contagem-pessoas', countPersons)
 }
