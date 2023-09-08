@@ -1,0 +1,19 @@
+config:
+  target: "http://localhost:9999"
+  phases:
+    - duration: 10
+      arrivalRate: 2
+      name: "Warming up"
+    - duration: 15
+      arrivalRate: 5
+      name: "Ramping up"
+    - duration: 180
+      arrivalRate: 6
+      rampTo: 600
+      name: "Sustained load"
+
+scenarios:
+  - name: "Register flow"
+    flow:
+      - get:
+          url: "/pessoas?t=avo"
