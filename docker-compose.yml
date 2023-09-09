@@ -38,8 +38,8 @@ services:
       - NODE_ENV=${NODE_ENV}
       - PORT=${PORT}
       - DATABASE_URL=${DATABASE_URL}
-    ports:
-      - 3333:3333
+    # ports:
+    #   - 3333:3333
     expose:
       - ${PORT}
     networks:
@@ -56,33 +56,8 @@ services:
     <<: *node
     container_name: rinha-node2
     hostname: rinha-node2
-    ports:
-      - 3334:3334
-  
-  # node2:
-  #   image: gpmarchi/rinha-backend-node:latest
-  #   container_name: rinha-node2
-  #   hostname: rinha-node2
-  #   restart: always
-  #   env_file:
-  #     - .env
-  #   environment:
-  #     - NODE_ENV=${NODE_ENV}
-  #     - PORT=${PORT}
-  #     - DATABASE_URL=${DATABASE_URL}
-  #   # ports:
-  #   #   - 3333:3333
-  #   expose:
-  #     - ${PORT}
-  #   networks:
-  #     - rinha-backend-network
-  #   depends_on:
-  #     - rinha-pg
-  #   deploy:
-  #     resources:
-  #       limits:
-  #         cpus: "0.25"
-  #         memory: "0.6GB"
+    # ports:
+    #   - 3334:3334
   
   nginx:
     image: nginx:1.15.0-alpine
