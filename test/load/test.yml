@@ -11,9 +11,34 @@ config:
       arrivalRate: 6
       rampTo: 600
       name: "Sustained load"
+  payload:
+    path: "./resources/pessoas-payloads.csv"
+    fields:
+      - "apelido"
+      - "nome"
+      - "nascimento"
+      - "stack"
+    order: sequence
+    cast: false
+  processor: "./processors/convert-stack.js"
 
 scenarios:
   - name: "Register flow"
     flow:
-      - get:
-          url: "/pessoas?t=avo"
+      - post:
+          url: "/pessoas"
+          beforeRequest: convertStack
+          headers:
+            Content-Type: "application/json"
+          json:
+            apelido: "{{ apelido }}"
+            nome: "{{ nome }}"
+            nascimento: "{{ nascimento }}"
+            stack: "{{ stack }}"
+
+  # - name: "Search flow"
+  #   flow:
+  #     - get:
+  #         url: "/pessoas"
+  #         qs:
+  #           t: "avo"
