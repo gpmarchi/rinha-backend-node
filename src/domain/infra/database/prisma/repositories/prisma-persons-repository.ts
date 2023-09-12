@@ -85,6 +85,7 @@ export class PrismaPersonsRepository implements PersonsRepository {
       include: {
         techs: true,
       },
+      take: 50,
     })
 
     return persons.map(PrismaPersonMapper.toDomainWithTechs)
