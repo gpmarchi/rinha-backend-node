@@ -11,7 +11,7 @@ export async function createPerson(
     apelido: z.string().max(32),
     nome: z.string().max(100),
     nascimento: z.coerce.date(),
-    stack: z.string().array().nullable(),
+    stack: z.string().max(32).array().nullable(),
   })
 
   const { apelido, nome, nascimento, stack } = createPersonBodySchema.parse(
