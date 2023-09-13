@@ -24,7 +24,7 @@ export class CreatePersonUseCase {
   }: CreatePersonUseCaseRequest): Promise<CreatePersonUseCaseResponse> {
     const existingPerson = await this.personsRepository.findByNickname(nickname)
 
-    if (existingPerson) {
+    if (existingPerson > 0) {
       throw new PersonAlreadyExistsError()
     }
 

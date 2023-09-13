@@ -8,16 +8,15 @@ export class InMemoryPersonsRepository implements PersonsRepository {
     this.items.push(person)
   }
 
-  async findByNickname(nickname: string): Promise<Person | null> {
-    const person = this.items.find(
-      (person) => person.nickname.toLowerCase() === nickname.toLowerCase(),
-    )
+  async findByNickname(nickname: string): Promise<number> {
+    const count = this.items.reduce((count, currentValue) => {
+      if (currentValue.nickname === nickname) {
+        count++
+      }
+      return count
+    }, 0)
 
-    if (!person) {
-      return null
-    }
-
-    return person
+    return count
   }
 
   async findById(id: string): Promise<Person | null> {

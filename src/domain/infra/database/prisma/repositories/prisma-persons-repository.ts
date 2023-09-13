@@ -23,18 +23,14 @@ export class PrismaPersonsRepository implements PersonsRepository {
     })
   }
 
-  async findByNickname(nickname: string): Promise<Person | null> {
-    const person = await prisma.person.findUnique({
+  async findByNickname(nickname: string): Promise<number> {
+    const count = await prisma.person.count({
       where: {
         nickname: nickname.toLowerCase(),
       },
     })
 
-    if (!person) {
-      return null
-    }
-
-    return PrismaPersonMapper.toDomain(person)
+    return count
   }
 
   async findById(id: string): Promise<Person | null> {
