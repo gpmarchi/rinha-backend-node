@@ -14,6 +14,8 @@ model Person {
   birthdate DateTime @db.Date
   techs     Tech[]
 
+  @@index([nickname], type: BTree)
+  @@index([name], type: BTree)
   @@map("persons")
 }
 
@@ -23,5 +25,6 @@ model Tech {
   Person   Person @relation(fields: [personId], references: [id], onDelete: Cascade)
   name     String @db.VarChar(32)
 
+  @@index([name], type: BTree)
   @@map("techs")
 }
