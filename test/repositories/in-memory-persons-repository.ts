@@ -34,9 +34,7 @@ export class InMemoryPersonsRepository implements PersonsRepository {
       (person) =>
         person.nickname.toLowerCase().includes(searchTerm.toLowerCase()) ||
         person.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        person.techs.some((tech) =>
-          tech.toLowerCase().includes(searchTerm.toLowerCase()),
-        ),
+        person.techs?.toLowerCase().includes(searchTerm.toLowerCase()),
     )
 
     return persons

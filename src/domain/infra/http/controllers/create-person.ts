@@ -25,7 +25,7 @@ export async function createPerson(
     nickname: apelido,
     name: nome,
     birthdate: nascimento,
-    techs: stack,
+    techs: stack ? JSON.stringify(stack) : '',
   })
 
   return reply

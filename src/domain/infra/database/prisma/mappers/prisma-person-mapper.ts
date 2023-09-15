@@ -1,10 +1,8 @@
 import { Person } from '@/domain/entities/person'
 import { UniqueEntityID } from '@/domain/entities/value-objects/unique-entity-id'
-import { Prisma, Person as RawPerson } from '@prisma/client'
+import { Person as PrismaPerson } from '@prisma/client'
 
-type RawPersonWithTechs = Prisma.PersonGetPayload<{
-  include: { techs: true }
-}>
+type RawPerson = Omit<PrismaPerson, 'searchableTrgm'>
 
 export class PrismaPersonMapper {
   static toPrisma(person: Person): RawPerson {
@@ -13,6 +11,7 @@ export class PrismaPersonMapper {
       nickname: person.nickname.toLowerCase(),
       name: person.name,
       birthdate: person.birthdate,
+      techs: person.techs,
     }
   }
 
@@ -22,19 +21,7 @@ export class PrismaPersonMapper {
         nickname: raw.nickname,
         name: raw.name,
         birthdate: raw.birthdate,
-        techs: [],
-      },
-      new UniqueEntityID(raw.id),
-    )
-  }
-
-  static toDomainWithTechs(raw: RawPersonWithTechs): Person {
-    return Person.create(
-      {
-        nickname: raw.nickname,
-        name: raw.name,
-        birthdate: raw.birthdate,
-        techs: raw.techs.map((tech) => tech.name),
+        techs: raw.techs,
       },
       new UniqueEntityID(raw.id),
     )

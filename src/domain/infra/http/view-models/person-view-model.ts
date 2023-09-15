@@ -7,7 +7,7 @@ export class PersonViewModel {
       apelido: person.nickname,
       nome: person.name,
       nascimento: person.birthdate.toISOString().split('T')[0],
-      stack: person.techs.length === 0 ? null : person.techs,
+      stack: person.techs ? JSON.parse(person.techs) : null,
     }
   }
 }

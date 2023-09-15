@@ -17,7 +17,7 @@ describe('Fetch Persons', () => {
       nickname: 'johndoe',
       name: 'John Doe',
       birthdate: new Date('1970-01-01'),
-      techs: ['NodeJS', 'PostgreSQL'],
+      techs: 'NodeJS, PostgreSQL',
     })
 
     await inMemoryPersonsRepository.create(newPerson)

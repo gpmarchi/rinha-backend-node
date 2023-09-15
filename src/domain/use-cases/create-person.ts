@@ -6,7 +6,7 @@ interface CreatePersonUseCaseRequest {
   nickname: string
   name: string
   birthdate: Date
-  techs: string[] | null
+  techs: string | null
 }
 
 interface CreatePersonUseCaseResponse {
@@ -32,7 +32,7 @@ export class CreatePersonUseCase {
       nickname,
       name,
       birthdate,
-      techs: techs ?? [],
+      techs,
     })
 
     await this.personsRepository.create(person)

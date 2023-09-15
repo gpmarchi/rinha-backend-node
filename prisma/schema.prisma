@@ -8,23 +8,12 @@ datasource db {
 }
 
 model Person {
-  id        String   @id @default(uuid())
-  nickname  String   @unique @db.VarChar(32)
-  name      String   @db.VarChar(100)
-  birthdate DateTime @db.Date
-  techs     Tech[]
+  id             String   @id @default(uuid())
+  nickname       String   @unique @db.VarChar(32)
+  name           String   @db.VarChar(100)
+  birthdate      DateTime @db.Date
+  techs          String?  @db.Text
+  searchableTrgm String?  @map("searchable_trgm") @db.Text
 
-  @@index([nickname], type: BTree)
-  @@index([name], type: BTree)
   @@map("persons")
-}
-
-model Tech {
-  id       String @id @default(uuid())
-  personId String @map(name: "person_id")
-  Person   Person @relation(fields: [personId], references: [id], onDelete: Cascade)
-  name     String @db.VarChar(32)
-
-  @@index([name], type: BTree)
-  @@map("techs")
 }

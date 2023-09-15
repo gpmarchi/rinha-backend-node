@@ -5,7 +5,7 @@ export interface PersonProps {
   nickname: string
   name: string
   birthdate: Date
-  techs: string[]
+  techs: string | null
 }
 
 export class Person extends Entity<PersonProps> {
