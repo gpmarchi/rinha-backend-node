@@ -1,8 +1,7 @@
 import { FetchPersonsUseCase } from '@/domain/use-cases/fetch-persons'
 import { FastifyReply, FastifyRequest } from 'fastify'
+import { container } from 'tsyringe'
 import { z } from 'zod'
-import { PrismaPersonsRepository } from '../../database/prisma/repositories/prisma-persons-repository'
-import { PersonViewModel } from '../view-models/person-view-model'
 
 export async function fetchPersons(
   request: FastifyRequest,
@@ -14,12 +13,12 @@ export async function fetchPersons(
 
   const { t } = fetchPersonsQueryParamSchema.parse(request.query)
 
-  const personsRepository = new PrismaPersonsRepository()
-  const fetchPersons = new FetchPersonsUseCase(personsRepository)
+  const fetchPersons = container.resolve(FetchPersonsUseCase)
 
   const { persons } = await fetchPersons.execute({
     searchTerm: t,
   })
 
-  return reply.status(200).send(persons.map(PersonViewModel.toHTTP))
+  // return reply.status(200).send(persons.map(PersonViewModel.toHTTP))
+  return reply.status(200).send(persons)
 }

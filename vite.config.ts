@@ -5,6 +5,7 @@ export default defineConfig({
   plugins: [tsConfigPaths()],
   test: {
     globals: true,
+    setupFiles: './test/config/setup-tests.ts',
     exclude: [...configDefaults.exclude, '**/build/**'],
   },
 })

@@ -1,3 +1,4 @@
+import { inject, injectable } from 'tsyringe'
 import { Person } from '../entities/person'
 import { PersonsRepository } from '../repositories/persons-repository'
 
@@ -9,8 +10,12 @@ interface FetchPersonsUseCaseResponse {
   persons: Person[]
 }
 
+@injectable()
 export class FetchPersonsUseCase {
-  constructor(private personsRepository: PersonsRepository) {}
+  constructor(
+    @inject('PersonsRepository')
+    private personsRepository: PersonsRepository,
+  ) {}
 
   async execute({
     searchTerm,

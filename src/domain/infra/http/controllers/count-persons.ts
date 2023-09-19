@@ -1,13 +1,12 @@
 import { CountPersonsUseCase } from '@/domain/use-cases/count-persons'
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { PrismaPersonsRepository } from '../../database/prisma/repositories/prisma-persons-repository'
+import { container } from 'tsyringe'
 
 export async function countPersons(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const personsRepository = new PrismaPersonsRepository()
-  const countPersons = new CountPersonsUseCase(personsRepository)
+  const countPersons = container.resolve(CountPersonsUseCase)
 
   const { count } = await countPersons.execute()
 

@@ -1,7 +1,7 @@
 import { CreatePersonUseCase } from '@/domain/use-cases/create-person'
 import { FastifyReply, FastifyRequest } from 'fastify'
+import { container } from 'tsyringe'
 import { z } from 'zod'
-import { PrismaPersonsRepository } from '../../database/prisma/repositories/prisma-persons-repository'
 
 export async function createPerson(
   request: FastifyRequest,
@@ -18,8 +18,7 @@ export async function createPerson(
     request.body,
   )
 
-  const personsRepository = new PrismaPersonsRepository()
-  const createPerson = new CreatePersonUseCase(personsRepository)
+  const createPerson = container.resolve(CreatePersonUseCase)
 
   const { person } = await createPerson.execute({
     nickname: apelido,

@@ -1,3 +1,4 @@
+import { inject, injectable } from 'tsyringe'
 import { Person } from '../entities/person'
 import { PersonAlreadyExistsError } from '../errors/person-already-exists-error'
 import { PersonsRepository } from '../repositories/persons-repository'
@@ -13,8 +14,12 @@ interface CreatePersonUseCaseResponse {
   person: Person
 }
 
+@injectable()
 export class CreatePersonUseCase {
-  constructor(private personsRepository: PersonsRepository) {}
+  constructor(
+    @inject('PersonsRepository')
+    private personsRepository: PersonsRepository,
+  ) {}
 
   async execute({
     nickname,

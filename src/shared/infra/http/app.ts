@@ -1,3 +1,6 @@
+import 'reflect-metadata'
+
+import '@/shared/container'
 import fastify from 'fastify'
 import { errorHandler } from './error-handler'
 import { appRoutes } from './routes'
