@@ -9,8 +9,8 @@ services:
     restart: always
     env_file:
       - .env
-    # ports:
-    #   - ${POSTGRESQL_PORT}:${POSTGRESQL_PORT}
+    ports:
+      - ${POSTGRESQL_PORT}:${POSTGRESQL_PORT}
     expose:
       - ${POSTGRESQL_PORT}
     environment:
@@ -18,18 +18,17 @@ services:
       - POSTGRES_PASSWORD=${POSTGRESQL_PASSWORD}
       - POSTGRES_DATABASE=${POSTGRESQL_DATABASE}
       - POSTGRES_HOST=${POSTGRESQL_HOST}
-    # command: postgres -c 'max_connections=450'
     command: postgres -c config_file=/docker-entrypoint-initdb.d/postgresql.conf
     volumes:
       - ./postgresql.conf:/docker-entrypoint-initdb.d/postgresql.conf
-    network_mode: host
-    # networks:
-    #   - rinha-backend-network
+    # network_mode: host
+    networks:
+      - rinha-backend-network
     deploy:
       resources:
         limits:
           cpus: "0.5"
-          memory: "1.5GB"
+          memory: "0.9GB"
 
   node1: &node
     image: gpmarchi/rinha-backend-node:latest
@@ -40,17 +39,18 @@ services:
       - .env
     environment:
       - NODE_ENV=${NODE_ENV}
-      # - PORT=${PORT}
-      - PORT=3333
+      - PORT=${PORT}
+      # - PORT=3333
       - DATABASE_URL=${DATABASE_URL}
     # ports:
+    #   - ${PORT}:${PORT}
     #   - 3333:3333
     expose:
-      # - ${PORT}
-      - 3333
-    network_mode: host
-    # networks:
-    #   - rinha-backend-network
+      - ${PORT}
+      # - 3333
+    # network_mode: host
+    networks:
+      - rinha-backend-network
     depends_on:
       - rinha-pg
     ulimits:
@@ -69,11 +69,26 @@ services:
     container_name: rinha-node2
     hostname: rinha-node2
     environment:
-      - PORT=3334
-    expose:
-      - 3334
+      - PORT=${PORT}
+      # - PORT=3334
     # ports:
     #   - 3334:3334
+    expose:
+      - ${PORT}
+      # - 3334
+
+  node3:
+    <<: *node
+    container_name: rinha-node3
+    hostname: rinha-node3
+    environment:
+      - PORT=${PORT}
+      # - PORT=3335
+    # ports:
+    #   - 3335:3335
+    expose:
+      - ${PORT}
+      # - 3335
   
   nginx:
     image: nginx:1.15.0-alpine
@@ -83,19 +98,22 @@ services:
     depends_on:
       - node1
       - node2
-    # ports:
-    #   - "9999:9999"
+      - node3
+    ports:
+      - "9999:9999"
     expose:
       - 9999
-    network_mode: host
-    # networks:
-    #   - rinha-backend-network
+    sysctls:
+      - net.core.somaxconn=3072
+    # network_mode: host
+    networks:
+      - rinha-backend-network
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: '0.25'
           memory: '0.3GB'
 
-# networks:
-#   rinha-backend-network:
-#     driver: bridge
+networks:
+  rinha-backend-network:
+    driver: bridge
