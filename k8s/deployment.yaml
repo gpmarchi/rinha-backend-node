@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "rinha"
+  labels:
+    app: "rinha"
+spec:
+  selector:
+    matchLabels:
+      app: "rinha"
+  replicas: 10
+  template:
+    metadata:
+      labels:
+        app: "rinha"
+    spec:
+      containers:
+        - name: rinha
+          image: "gpmarchi/rinha-backend-node:latest"
+          envFrom:
+            - configMapRef:
+                name: rinha-env

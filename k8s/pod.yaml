@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "rinha"
+  labels:
+    app: "rinha"
+spec:
+  containers:
+    - name: rinha
+      image: "gpmarchi/rinha-backend-node:latest"
+      # env:
+      #   - name: NODE_ENV
+      #     valueFrom:
+      #       configMapKeyRef:
+      #         name: rinha-env
+      #         key: NODE_ENV
+      #   - name: PORT
+      #     valueFrom:
+      #       configMapKeyRef:
+      #         name: rinha-env
+      #         key: PORT
+      #   - name: DATABASE_URL
+      #     valueFrom:
+      #       configMapKeyRef:
+      #         name: rinha-env
+      #         key: DATABASE_URL
+      envFrom:
+        - configMapRef:
+            name: rinha-env
